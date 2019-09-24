@@ -25,6 +25,19 @@ function run(ctx) {
 
   var oldProjectName = getOldProjectName(iosProjectFilePath);
 
+  // copy cordova entitlements file to the resources folder
+  var cordovaEntitlementsFilePath = path.join(iosProjectFilePath, oldProjectName,  'Entitlements' + (ctx.opts.production ? '-Release.plist' : '-Debug.plist'));
+  var pluginEntitlementsFilePath = path.join(iosProjectFilePath, oldProjectName, 'Resources', oldProjectName + '.entitlements');
+
+  console.log('Copying entitlement to resources folder');
+
+  try {
+    fs.copyFileSync(cordovaEntitlementsFilePath, pluginEntitlementsFilePath);
+  } catch (err) {
+    console.warn('Failed to copy cordova entitlements file');
+    console.warn(err);
+  }
+
   // if name has not changed - do nothing
   if (oldProjectName.length && oldProjectName === newProjectName) {
     return;
