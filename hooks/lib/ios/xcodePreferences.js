@@ -99,7 +99,7 @@ function addPbxReference(xcodeProject) {
   }
 
   console.log('Entitlements file is not in references section, adding it');
-  xcodeProject.addResourceFile(entitlementsFileName);
+  xcodeProject.addResourceFile("../"+entitlementsFileName);
 }
 
 /**
@@ -188,10 +188,11 @@ function projectRoot() {
 
 function pathToEntitlementsFile() {
   var configXmlHelper = new ConfigXmlHelper(context),
-    projectName = configXmlHelper.getProjectName(),
-    fileName = projectName + '.entitlements';
+    projectName = configXmlHelper.getProjectName();
+  var aps_environment =  context.opts.production ? '-Release' : '-Debug';
+  var fileName = 'Entitlements' + aps_environment + '.plist';
 
-  return path.join(projectName, 'Resources', fileName);
+  return path.join(projectName, fileName);
 }
 
 // endregion

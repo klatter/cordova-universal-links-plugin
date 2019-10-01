@@ -142,7 +142,8 @@ function domainsListEntryForHost(host) {
  */
 function pathToEntitlementsFile() {
   if (entitlementsFilePath === undefined) {
-    entitlementsFilePath = path.join(getProjectRoot(), 'platforms', 'ios', getProjectName(), 'Resources', getProjectName() + '.entitlements');
+    var aps_environment =  context.opts.production ? '-Release' : '-Debug';
+    entitlementsFilePath = path.join(getProjectRoot(), 'platforms', 'ios', getProjectName(), 'Entitlements' + aps_environment + '.plist');
   }
 
   return entitlementsFilePath;
